@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV and Film Antiheroes Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 300px;
+            height: 300px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">ANTIHEROS QUIZ</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of questions and answers about TV and film antiheroes
+        const antiheroesQuestions = [
+            { question: "Which TV show features Walter White as the protagonist?", answer: "Breaking Bad" },
+            { question: "In which film does Travis Bickle, an antihero, appear?", answer: "Taxi Driver" },
+            { question: "Who plays the antihero Dexter Morgan in the TV series 'Dexter'?", answer: "Michael C. Hall" },
+            { question: "Which film features the character of Tyler Durden, played by Brad Pitt?", answer: "Fight Club" },
+            { question: "In which TV show does Tony Soprano struggle with his criminal empire?", answer: "The Sopranos" },
+            { question: "Which film stars Hugh Jackman as the antihero Wolverine?", answer: "Logan" },
+            { question: "Who is the antihero protagonist in the film 'The Punisher'?", answer: "Frank Castle" },
+            { question: "In which TV series does the character of Frank Underwood manipulate his way to power?", answer: "House of Cards" },
+            { question: "Which film features a morally ambiguous antihero named Max Rockatansky?", answer: "Mad Max" },
+            { question: "In which TV series does the character of Don Draper navigate the advertising world?", answer: "Mad Men" },
+            { question: "Who is the antihero protagonist in the film 'American Psycho'?", answer: "Patrick Bateman" },
+            { question: "In which TV show does the character of Jaime Lannister struggle with his honor and family?", answer: "Game of Thrones" },
+            { question: "Which film stars Joaquin Phoenix as the antihero Arthur Fleck?", answer: "Joker" },
+            { question: "Who plays the antihero Tony Montana in 'Scarface'?", answer: "Al Pacino" },
+            { question: "Which TV show features a character named Rick Grimes leading a group in a zombie apocalypse?", answer: "The Walking Dead" },
+            { question: "In which film does Jack Sparrow, an antihero, embark on adventures?", answer: "Pirates of the Caribbean" },
+            { question: "Which TV show features the antihero Jack Bauer fighting terrorism?", answer: "24" },
+            { question: "Who plays the antihero Walter White in 'Breaking Bad'?", answer: "Bryan Cranston" },
+            { question: "In which film does the character of Neo battle a dystopian future?", answer: "The Matrix" },
+            { question: "Which TV show features the morally ambiguous character of V, played by Hugo Weaving?", answer: "V for Vendetta" },
+            { question: "Who is the antihero in the film 'The Dark Knight'?", answer: "The Joker" },
+            { question: "In which TV series does the character of Piper Chapman navigate life in prison?", answer: "Orange is the New Black" },
+            { question: "Which film features the antihero played by Ryan Reynolds in 'Deadpool'?", answer: "Deadpool" },
+            { question: "Who plays the antihero Frank Castle in 'The Punisher' TV series?", answer: "Jon Bernthal" },
+            { question: "In which TV show does the character of Barry Allen struggle with his powers?", answer: "The Flash" },
+            { question: "Which film features an antihero named The Bride, played by Uma Thurman?", answer: "Kill Bill" },
+            { question: "Who is the antihero protagonist in 'The Godfather' series?", answer: "Michael Corleone" },
+            { question: "In which TV series does the character of Dexter Morgan work as a forensic expert by day and a vigilante by night?", answer: "Dexter" },
+            { question: "Which film features a morally ambiguous character named Ryan Stone?", answer: "Gravity" },
+            { question: "Who plays the antihero in the film 'The Big Lebowski'?", answer: "Jeff Lebowski" },
+            { question: "In which TV series does the character of Walter White transform into a drug lord?", answer: "Breaking Bad" },
+            { question: "Which film features the antihero named John Wick, played by Keanu Reeves?", answer: "John Wick" },
+            { question: "Who is the antihero protagonist in the TV series 'Sons of Anarchy'?", answer: "Jax Teller" },
+            { question: "In which film does the character of Rorschach appear as a vigilante?", answer: "Watchmen" },
+            { question: "Which TV show features the antihero named Thomas Shelby?", answer: "Peaky Blinders" },
+            { question: "Who plays the antihero in the film 'The Dark Knight Rises'?", answer: "Bane" },
+            { question: "In which TV series does the character of Walter White lead a double life as a high school teacher and drug manufacturer?", answer: "Breaking Bad" },
+            { question: "Which film features the antihero named Tyler Durden, played by Brad Pitt?", answer: "Fight Club" },
+            { question: "Who is the antihero protagonist in the film 'The Departed'?", answer: "Billy Costigan" },
+            { question: "In which TV show does the character of Saul Goodman navigate the criminal underworld?", answer: "Better Call Saul" },
+            { question: "Which film features the antihero named Norman Bates?", answer: "Psycho" },
+            { question: "Who plays the antihero Patrick Bateman in 'American Psycho'?", answer: "Christian Bale" },
+            { question: "In which TV series does the character of Rick Sanchez cause chaos across the multiverse?", answer: "Rick and Morty" },
+            { question: "Which film features the antihero named Mad Max, played by Tom Hardy?", answer: "Mad Max: Fury Road" },
+            { question: "Who is the antihero protagonist in the film 'The Wolf of Wall Street'?", answer: "Jordan Belfort" },
+            { question: "In which TV show does the character of Frank Underwood manipulate and deceive to gain political power?", answer: "House of Cards" },
+            { question: "Which film features the antihero named Jules Winnfield?", answer: "Pulp Fiction" },
+            { question: "Who plays the antihero character of Loki in the Marvel Cinematic Universe?", answer: "Tom Hiddleston" },
+            { question: "In which TV series does the character of Jack Bauer fight terrorism?", answer: "24" },
+            { question: "Which film features the antihero named The Bride, played by Uma Thurman?", answer: "Kill Bill" },
+            { question: "Who is the antihero protagonist in the film 'Joker'?", answer: "Arthur Fleck" },
+            { question: "In which TV show does the character of Jax Teller navigate the criminal underworld?", answer: "Sons of Anarchy" },
+            { question: "Which film features the antihero named V, played by Hugo Weaving?", answer: "V for Vendetta" },
+            { question: "Who plays the antihero named Tyler Durden in 'Fight Club'?", answer: "Brad Pitt" },
+            { question: "In which TV series does the character of Dexter Morgan work as a forensic blood spatter analyst by day and a vigilante killer by night?", answer: "Dexter" },
+            { question: "Which film features the antihero named Frank Castle, played by Tom Jane?", answer: "The Punisher" },
+            { question: "Who is the antihero protagonist in the film 'A Clockwork Orange'?", answer: "Alex DeLarge" },
+            { question: "In which TV show does the character of Walter White transform into a drug lord?", answer: "Breaking Bad" },
+            { question: "Which film features the antihero named Tony Montana?", answer: "Scarface" },
+            { question: "Who plays the antihero in the film 'The Usual Suspects'?", answer: "Keyser Söze" },
+            { question: "In which TV series does the character of Thomas Shelby lead the Peaky Blinders gang?", answer: "Peaky Blinders" },
+            { question: "Which film features the antihero named Travis Bickle?", answer: "Taxi Driver" },
+            { question: "Who is the antihero protagonist in the film 'Sin City'?", answer: "Marv" },
+            { question: "In which TV show does the character of Frank Castle fight crime with a brutal justice?", answer: "The Punisher" },
+            { question: "Which film features the antihero named Walter White?", answer: "Breaking Bad" },
+            { question: "Who plays the antihero named The Joker in 'The Dark Knight'?", answer: "Heath Ledger" },
+            { question: "In which TV series does the character of Dexter Morgan work as a forensic blood spatter analyst and a vigilante?", answer: "Dexter" },
+            { question: "Which film features the antihero named Patrick Bateman?", answer: "American Psycho" },
+            { question: "Who is the antihero protagonist in the film 'Deadpool'?", answer: "Wade Wilson" },
+            { question: "In which TV show does the character of Rick Sanchez cause chaos across the multiverse?", answer: "Rick and Morty" },
+            { question: "Which film features the antihero named Tyler Durden?", answer: "Fight Club" },
+            { question: "Who plays the antihero named Frank Castle in 'The Punisher'?", answer: "Jon Bernthal" },
+            { question: "In which TV series does the character of Barry Allen navigate his life as The Flash?", answer: "The Flash" },
+            { question: "Which film features the antihero named Norman Bates?", answer: "Psycho" },
+            { question: "Who is the antihero protagonist in the film 'Watchmen'?", answer: "Rorschach" },
+            { question: "In which TV series does the character of Dexter Morgan seek justice as a vigilante?", answer: "Dexter" },
+            { question: "Which film features the antihero named Max Rockatansky?", answer: "Mad Max" },
+            { question: "Who plays the antihero Tony Montana in 'Scarface'?", answer: "Al Pacino" },
+            { question: "In which TV show does the character of Frank Underwood rise to political power?", answer: "House of Cards" },
+            { question: "Which film features the antihero named John Wick?", answer: "John Wick" },
+            { question: "Who is the antihero protagonist in the film 'The Big Lebowski'?", answer: "Jeff Lebowski" },
+            { question: "In which TV series does the character of Saul Goodman navigate the criminal underworld?", answer: "Better Call Saul" },
+            { question: "Which film features the antihero named Jules Winnfield?", answer: "Pulp Fiction" },
+            { question: "Who plays the antihero named Arthur Fleck in 'Joker'?", answer: "Joaquin Phoenix" },
+            { question: "In which TV series does the character of Jax Teller lead the motorcycle gang Sons of Anarchy?", answer: "Sons of Anarchy" },
+            { question: "Which film features the antihero named Frank Castle?", answer: "The Punisher" },
+            { question: "Who is the antihero protagonist in the film 'A Clockwork Orange'?", answer: "Alex DeLarge" },
+            { question: "In which TV show does the character of Thomas Shelby lead the Peaky Blinders gang?", answer: "Peaky Blinders" },
+            { question: "Which film features the antihero named Travis Bickle?", answer: "Taxi Driver" },
+            { question: "Who plays the antihero named Wade Wilson in 'Deadpool'?", answer: "Ryan Reynolds" },
+            { question: "In which TV show does the character of Frank Castle fight crime with a brutal justice?", answer: "The Punisher" },
+            { question: "Which film features the antihero named Rorschach?", answer: "Watchmen" },
+            { question: "Who is the antihero protagonist in the film 'Sin City'?", answer: "Marv" },
+            { question: "In which TV series does the character of Barry Allen navigate his life as The Flash?", answer: "The Flash" },
+            { question: "Which film features the antihero named Walter White?", answer: "Breaking Bad" },
+            { question: "Who plays the antihero in the film 'The Dark Knight'?", answer: "Heath Ledger" },
+            { question: "In which TV series does the character of Dexter Morgan work as a forensic blood spatter analyst and a vigilante?", answer: "Dexter" },
+            { question: "Which film features the antihero named Patrick Bateman?", answer: "American Psycho" },
+            { question: "Who is the antihero protagonist in the film 'John Wick'?", answer: "John Wick" },
+            { question: "In which TV show does the character of Rick Sanchez cause chaos across the multiverse?", answer: "Rick and Morty" },
+            { question: "Which film features the antihero named Tyler Durden?", answer: "Fight Club" },
+            { question: "Who plays the antihero named Frank Castle in 'The Punisher'?", answer: "Jon Bernthal" },
+            { question: "In which TV series does the character of Barry Allen navigate his life as The Flash?", answer: "The Flash" },
+            { question: "Which film features the antihero named Norman Bates?", answer: "Psycho" },
+            { question: "Who is the antihero protagonist in the film 'Watchmen'?", answer: "Rorschach" },
+            { question: "In which TV series does the character of Dexter Morgan seek justice as a vigilante?", answer: "Dexter" },
+            { question: "Which film features the antihero named Max Rockatansky?", answer: "Mad Max" },
+            { question: "Who plays the antihero Tony Montana in 'Scarface'?", answer: "Al Pacino" },
+            { question: "In which TV show does the character of Frank Underwood rise to political power?", answer: "House of Cards" },
+            { question: "Which film features the antihero named John Wick?", answer: "John Wick" },
+            { question: "Who is the antihero protagonist in the film 'The Big Lebowski'?", answer: "Jeff Lebowski" },
+            { question: "In which TV series does the character of Saul Goodman navigate the criminal underworld?", answer: "Better Call Saul" },
+            { question: "Which film features the antihero named Jules Winnfield?", answer: "Pulp Fiction" },
+            { question: "Who plays the antihero named Arthur Fleck in 'Joker'?", answer: "Joaquin Phoenix" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...antiheroesQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Bounce animation on click
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => yellowBox.classList.remove("animate-bounce"), 300);
+            
+            questionIndex++;
+            if (questionIndex >= shuffledQuestions.length) {
+                questionIndex = 0; // Reset to first question if out of questions
+            }
+            displayQuestion();
+        });
+
+        // Initialize the quiz
+        initializeQuestions();
+    </script>
+
+</body>
+</html>
